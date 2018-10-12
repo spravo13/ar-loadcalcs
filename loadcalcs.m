@@ -1,4 +1,5 @@
-function [x] = loadcalcs(B)
+function [] = loadcalcs(B)
+
 
 % function used to calculate the forces on each component in a push rod suspension
 %	system. 
@@ -90,8 +91,13 @@ sig_mx = [m_TR(1), m_LCAF(1), m_LCAR(1), m_UCAF(1), m_UCAR(1), m_PR(1)];
 sig_my = [m_TR(2), m_LCAF(2), m_LCAR(2), m_UCAF(2), m_UCAR(2), m_PR(2)];
 sig_mz = [m_TR(3), m_LCAF(3), m_LCAR(3), m_UCAF(3), m_UCAR(3), m_PR(3)];
 
+
 A = [sig_fx; sig_fy; sig_fz; sig_mx; sig_my; sig_mz];
 
-x = A\B
+
+x = A\B;
+
+fprintf(' Tie Rod: \t \t \t %f \n Lower Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Upper Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Push Rod: \t \t \t %f \n', x(1), x(2), x(3), x(4), x(5), x(6));
+
 
 end
