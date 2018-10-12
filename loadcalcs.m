@@ -19,12 +19,14 @@ UCAR = [];
 % Push Rod
 PR = [];
 
+%test cases
 TR = [1,1,1; 10, 10, 10; 5 89 78]
 LCAF = [2,2,2]
 LCAR = [3,3,3]
 UCAF = [4,4,4]
 UCAR = [5,5,5]
 PR = [6,6,6]
+%end test cases
 
 % takes multiple measurements into consideration
 % see ./reduction.m
@@ -42,3 +44,7 @@ norm_LCAR = LCAR./norm(LCAR)
 norm_UCAF = UCAF./norm(UCAF)
 norm_UCAR = UCAR./norm(UCAR)
 norm_PR = PR./norm(PR)
+
+sig_x = [norm_TR(1), norm_LCAF(1), norm_LCAR(1), norm_UCAF(1), norm_UCAR(1), norm_PR(1)]
+sig_y = [norm_TR(2), norm_LCAF(2), norm_LCAR(2), norm_UCAF(2), norm_UCAR(2), norm_PR(2)]
+sig_z = [norm_TR(3), norm_LCAF(3), norm_LCAR(3), norm_UCAF(3), norm_UCAR(3), norm_PR(3)]
