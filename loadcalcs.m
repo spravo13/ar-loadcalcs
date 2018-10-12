@@ -18,3 +18,15 @@ UCAF = [];
 UCAR = [];
 % Push Rod
 PR = [];
+
+% takes multiple measurements into consideration
+for m = [TR, LCAF, LCAR, UCAF, UCAR, PR]
+	if size(m,1) > 1			%checks for multiple rows (measurments)
+		for i = [2:size(m,1)]
+			mult_factor_array = m(1,:) ./ m(i,:);
+			mult_factor = mean(mult_factor_array);
+			m(i, :) = mult_factor .* m(i, :)
+		end
+		m = mean(m);
+	end
+end
