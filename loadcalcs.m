@@ -46,25 +46,6 @@ B = [ 		;		%Fx (sum)
 		;];		%Mx (sum)
 
 
-%%%test cases%%%
-TR = [1,1,1; 10, 10, 10; 5 89 78];
-LCAF = [2,2,2];
-LCAR = [3,3,3];
-UCAF = [4,4,4];
-UCAR = [5,5,5];
-PR = [6,6,6];
-
-r_TR = [4 34 5];
-r_LCAF = [53 35 2];
-r_LCAR = [24 24 5];
-r_UCAF = [3 53 3];
-r_UCAR = [24 45 3];
-r_PR = [24 2 4; 25 3 5];
-
-B = [56;89;74;75;689;9];
-%%%end test cases%%%
-
-
 % takes multiple measurements into consideration
 % see ./reduction.m
 [TR] = reduction(TR);
