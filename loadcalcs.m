@@ -30,3 +30,13 @@ for m = [TR, LCAF, LCAR, UCAF, UCAR, PR]
 		m = mean(m);
 	end
 end
+
+% Error Checking
+c = 1
+for m = [TR, LCAF, LCAR, UCAF, UCAR, PR]
+	if size(m,1) ~= 1
+		fprintf('something is wrong. Matrix # %d member is not 1x3', c);
+	end
+	c = c+1
+end
+% End Error Checking
