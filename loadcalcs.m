@@ -19,24 +19,19 @@ UCAR = [];
 % Push Rod
 PR = [];
 
-% takes multiple measurements into consideration
-for m = [TR, LCAF, LCAR, UCAF, UCAR, PR]
-	if size(m,1) > 1			%checks for multiple rows (measurments)
-		for i = [2:size(m,1)]
-			mult_factor_array = m(1,:) ./ m(i,:);
-			mult_factor = mean(mult_factor_array);
-			m(i, :) = mult_factor .* m(i, :)
-		end
-		m = mean(m);
-	end
-end
+%TR = [1,1,1; 10, 10, 10]
+%LCAF = [2,2,2]
+%LCAR = [3,3,3]
+%UCAF = [4,4,4]
+%UCAR = [5,5,5]
+%PR = [6,6,6]
 
-% Error Checking
-c = 1
-for m = [TR, LCAF, LCAR, UCAF, UCAR, PR]
-	if size(m,1) ~= 1
-		fprintf('something is wrong. Matrix # %d member is not 1x3', c);
-	end
-	c = c+1
-end
-% End Error Checking
+% takes multiple measurements into consideration
+
+[TR] = reduction(TR)
+[LCAF] = reduction(LCAF)
+[LCAR] = reduction(LCAR)
+[UCAF] = reduction(UCAF)
+[UCAR] = reduction(UCAR)
+[PR] = reduction(PR)
+
