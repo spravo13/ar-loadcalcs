@@ -44,12 +44,12 @@ UCAF = [4,4,4]
 UCAR = [5,5,5]
 PR = [6,6,6]
 
-r_TR = []
-r_LCAF = []
-r_LCAR = []
-r_UCAF = []
-r_UCAR = []
-r_PR = []
+r_TR = [4 34 5]
+r_LCAF = [53 35 2]
+r_LCAR = [24 24 5]
+r_UCAF = [3 53 3]
+r_UCAR = [24 45 3]
+r_PR = [24 2 4; 25 3 5]
 %end test cases
 
 % takes multiple measurements into consideration
@@ -68,6 +68,16 @@ norm_LCAR = LCAR./norm(LCAR)
 norm_UCAF = UCAF./norm(UCAF)
 norm_UCAR = UCAR./norm(UCAR)
 norm_PR = PR./norm(PR)
+
+% Checks for r vectors not 1x3. (makes nx3 => 1x3)
+[r_TR] = r_avg(r_TR)
+[r_LCAF] = r_avg(r_LCAF)
+[r_LCAR] = r_avg(r_LCAR)
+[r_UCAF] = r_avg(r_UCAF)
+[r_UCAR] = r_avg(r_UCAR)
+[r_PR] = r_avg(r_PR)
+
+
 
 sig_x = [norm_TR(1), norm_LCAF(1), norm_LCAR(1), norm_UCAF(1), norm_UCAR(1), norm_PR(1)]
 sig_y = [norm_TR(2), norm_LCAF(2), norm_LCAR(2), norm_UCAF(2), norm_UCAR(2), norm_PR(2)]
