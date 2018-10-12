@@ -1,8 +1,12 @@
-clear all, close all, clc
+function [x] = loadcalcs(B)
+
+% function used to calculate the forces on each component in a push rod suspension
+%	system. 
+% Input should be in the form of a column vector with the values of 
+%	ΣFx, ΣFy, ΣFz ΣMx, ΣMy, and ΣMz respectively
 
 % components of vectors describing the directions of the suspension members
 % and therefore the direction of the resultant forces
-
 % each component should be an nx3 matrix where n is typically 1, but can be
 % any number if multiple measurments are taken
 
@@ -35,15 +39,6 @@ r_UCAF = [];
 r_UCAR = [];
 %r(position vector) for Push Rod
 r_PR = [];
-
-
-% B contains the values of the summation of fx, mx, etc.
-B = [ 		;		%Fx (sum)
-		;		%Fy (sum)
-		;		%Fz (sum)
-		;		%Mx (sum)
-		;		%My (sum)
-		;];		%Mx (sum)
 
 
 % takes multiple measurements into consideration
@@ -98,3 +93,5 @@ sig_mz = [m_TR(3), m_LCAF(3), m_LCAR(3), m_UCAF(3), m_UCAR(3), m_PR(3)];
 A = [sig_fx; sig_fy; sig_fz; sig_mx; sig_my; sig_mz];
 
 x = A\B
+
+end
