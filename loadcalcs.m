@@ -1,15 +1,15 @@
 function [] = loadcalcs(B)
 
-
 % function used to calculate the forces on each component in a push rod suspension
 %	system. 
 % Input should be in the form of a column vector with the values of 
 %	ΣFx, ΣFy, ΣFz ΣMx, ΣMy, and ΣMz respectively
 
+
 % components of vectors describing the directions of the suspension members
-% and therefore the direction of the resultant forces
-% each component should be an nx3 matrix where n is typically 1, but can be
-% any number if multiple measurments are taken
+% 	and therefore the direction of the resultant forces each component 
+% 	should be an nx3 matrix where n is typically 1, but can be
+% 	any number if multiple measurments are taken
 
 % Tie Rod
 TR = [];
@@ -42,14 +42,31 @@ r_UCAR = [];
 r_PR = [];
 
 
+%%%test cases%%%
+TR = [-.5,-4,-1];
+LCAF = [-3,-5,1];
+LCAR = [3,-5,1];
+UCAF = [-3,-5,-1];
+UCAR = [3,-5,-1];
+PR = [-.5,-4,1];
+r_TR = [1 1 0];
+r_LCAF = [-1 1 0];
+r_LCAR = [1 -1 0];
+r_UCAF = [-1 -1 0];
+r_UCAR = [1 1 0];
+r_PR = [1.5 -1 0];
+B = [0;0;0;500;300;700];
+%%%end test cases%%%
+
+
 % takes multiple measurements into consideration
-% see ./reduction.m
-[TR] = reduction(TR);
-[LCAF] = reduction(LCAF);
-[LCAR] = reduction(LCAR);
-[UCAF] = reduction(UCAF);
-[UCAR] = reduction(UCAR);
-[PR] = reduction(PR);
+% see ./reduce.m
+[TR] = reduce(TR);
+[LCAF] = reduce(LCAF);
+[LCAR] = reduce(LCAR);
+[UCAF] = reduce(UCAF);
+[UCAR] = reduce(UCAR);
+[PR] = reduce(PR);
 
 
 % normalizes (makes into unit vectors). Program assumes magnitude ~= 0
@@ -92,12 +109,15 @@ sig_my = [m_TR(2), m_LCAF(2), m_LCAR(2), m_UCAF(2), m_UCAR(2), m_PR(2)];
 sig_mz = [m_TR(3), m_LCAF(3), m_LCAR(3), m_UCAF(3), m_UCAR(3), m_PR(3)];
 
 
+% sets A as concatonation of all force and moments vectors
 A = [sig_fx; sig_fy; sig_fz; sig_mx; sig_my; sig_mz];
 
 
+% solves the linear system of 6 unknowns and 6 equations
 x = A\B;
 
-fprintf(' Tie Rod: \t \t \t %f \n Lower Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Upper Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Push Rod: \t \t \t %f \n', x(1), x(2), x(3), x(4), x(5), x(6));
 
+% prints results
+fprintf(' Tie Rod: \t \t \t %f \n Lower Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Upper Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Push Rod: \t \t \t %f \n', x(1), x(2), x(3), x(4), x(5), x(6));
 
 end

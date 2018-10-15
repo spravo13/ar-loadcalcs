@@ -1,5 +1,5 @@
 % takes multiple measurements into consideration
-function [r] = reduction(m)
+function [r] = reduce(m)
 	if size(m,1) > 1			%checks for multiple rows (measurments)
 		for i = [2:size(m,1)]
 			mult_factor_array = m(1,:) ./ m(i,:);
