@@ -1,62 +1,102 @@
-function [] = loadcalcs(B)
+function [] = loadcalcs(B, wheel)
 
-% function used to calculate the forces on each component in a push rod suspension
-%	system. 
-% Input should be in the form of a column vector with the values of 
+% function used to calculate the forces on each component in a push rod 
+%	suspension system. 
+%
+% Use: loadcalcs(B, wheel)
+% Argument "B" should be in the form of a vector with the values of 
 %	ΣFx, ΣFy, ΣFz ΣMx, ΣMy, and ΣMz respectively
-
+% Argument "Wheel" should be either 'rear' or 'front'
+%
+% Note: all calcs are for right side of car (if sitting in driver's seat).
 
 % components of vectors describing the directions of the suspension members
 % 	and therefore the direction of the resultant forces each component 
 % 	should be an nx3 matrix where n is typically 1, but can be
 % 	any number if multiple measurments are taken
 
-% Tie Rod
-TR = [];
-% Lower Control Arm, Front
-LCAF = [];
-% Lower Control Arm, Rear
-LCAR = [];
-% Upper Control Arm, Front
-UCAF = [];
-% Upper Control Arm, Rear
-UCAR = [];
-% Push Rod
-PR = [];
+% checks input arguments for validity
+
+if numel(B) ~= 6
+	fprintf('The matrix "B" you entered does not have 6 elements corresponding \n
+		to ΣFx, ΣFy, ΣFz ΣMx, ΣMy, and ΣMz respectively');
+	return;
+else
+	if size(B,1) ~= 6
+		B = B'
+	end
+end
+
+if wheel == 'rear'
+
+	% Rear Tie Rod
+	TR = [];
+	% Rear Lower Control Arm, Front
+	LCAF = [25.438851,	 -6.759425,	 -1.769762];
+	% Rear Lower Control Arm, Rear
+	LCAR = [4.837878,	 -9.675756,	 -1.759228];
+	% Rear Upper Control Arm, Front
+	UCAF = [23.065203,	 -2.711059,	 -3.313228];
+	% Rear Upper Control Arm, Rear
+	UCAR = [2.469657,	 -5.645462,	 -3.289517];
+	% Rear Push Rod
+	PR = [];
 
 
-% each component is the distance between the wheel center and the force vector
-%multiple measurments are allowed
+	% each component is the distance between the wheel center and the 
+	%force vector multiple measurments are allowed
 
-% r(position vector) for Tie Rod
-r_TR = []; 
-% r(position vector) for Lower Control Arm, Front
-r_LCAF = [];
-%r(position vector) for Lower Control Arm, Rear
-r_LCAR = [];
-%r(position vector) for Upper Control Arm, Front
-r_UCAF = [];
-%r(position vector) for Upper Control Arm, Rear
-r_UCAR = [];
-%r(position vector) for Push Rod
-r_PR = [];
+	% r(position vector) for Rear Tie Rod
+	r_TR = []; 
+	% r(position vector) for Rear Lower Control Arm, Front
+	r_LCAF = [0,	 -5.5,	 	 0];
+	%r(position vector) for Rear Lower Control Arm, Rear
+	r_LCAR = [0,	 -5.5,	 	 0];
+	%r(position vector) for Rear Upper Control Arm, Front
+	r_UCAF = [0,	 -5.767212,	 0];
+	%r(position vector) for Rear Upper Control Arm, Rear
+	r_UCAR = [0,	 -5.767212,	 0];
+	%r(position vector) for Rear Push Rod
+	r_PR = [];
+
+else if wheel == 'front'
+
+	% Front Tie Rod
+	TR = [];
+	% Front Lower Control Arm, Front
+	LCAF = [6.85,	 -14.94,	 -0.75];
+	% Front Lower Control Arm, Rear
+	LCAR = [-7.65	 -14.97,	 -0.75];
+	% Front Upper Control Arm, Front
+	UCAF = [7.65,	 -9.787249,	 -1.912351];
+	% Front Upper Control Arm, Rear
+	UCAR = [-6.85,	 -9.787249,	 -1.912351];
+	% Front Push Rod
+	PR = [];
 
 
-%%%test cases%%%
-TR = [-.5,-4,-1];
-LCAF = [-3,-5,1];
-LCAR = [3,-5,1];
-UCAF = [-3,-5,-1];
-UCAR = [3,-5,-1];
-PR = [-.5,-4,1];
-r_TR = [1 1 0];
-r_LCAF = [-1 1 0];
-r_LCAR = [1 -1 0];
-r_UCAF = [-1 -1 0];
-r_UCAR = [1 1 0];
-r_PR = [1.5 -1 0];
-B = [0;0;0;500;300;700];
-%%%end test cases%%%
+	% each component is the distance between the wheel center and the 
+	%force vector multiple measurments are allowed
+
+	% r(position vector) for Front Tie Rod
+	r_TR = []; 
+	% r(position vector) for Front Lower Control Arm, Front
+	r_LCAF = [0,	 -1.06,		 0];
+	%r(position vector) for Front Lower Control Arm, Rear
+	r_LCAR = [0,	 -1.06,		 0];
+	%r(position vector) for Front Upper Control Arm, Front
+	r_UCAF = [0,	 -1.862751	 0];
+	%r(position vector) for Front Upper Control Arm, Rear
+	r_UCAR = [0	 -1.862751	 0];
+	%r(position vector) for Front Push Rod
+	r_PR = [];
+
+else
+
+	fprintf('you entered an invalid wheel. Options are rear and front.');
+	return;
+
+end
 
 
 % takes multiple measurements into consideration
