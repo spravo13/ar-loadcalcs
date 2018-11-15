@@ -27,8 +27,9 @@ else
 end
 
 
-if wheel == 1			%Rear
-	
+if wheel == 1			% Rear
+
+	fprintf('Rear \n \n');
 	% Rear Tie Rod
 	TR =   [5.2,		 -4.17,		 -1.3];
 	% Rear Lower Control Arm, Front
@@ -63,8 +64,9 @@ if wheel == 1			%Rear
 	%r(position vector) for Rear Push Rod
 	r_PR =   [1.575, -9.225,	 -3.58268];
 
-elseif wheel == 2
+elseif wheel == 2		% Front
 
+	fprintf('Front \n \n');
 	% Front Tie Rod
 	TR =   [1.32,	 -9.1,		 -0.85];
 	% Front Lower Control Arm, Front
@@ -167,6 +169,35 @@ x = A\B;
 
 
 % prints results
-			fprintf(' Tie Rod: \t \t \t %f \n Lower Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Upper Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Push Rod: \t \t \t %f \n', x(1), x(2), x(3), x(4), x(5), x(6));
+%			fprintf(' Tie Rod: \t \t \t %f \n Lower Control Arm, Front: \t %f \n Lower Control Arm, Rear: \t %f \n Upper Control Arm, Front: \t %f \n Upper Control Arm, Rear: \t %f \n Push Rod: \t \t \t %f \n', x(1), x(2), x(3), x(4), x(5), x(6));
+
+
+%%% ANSYS uses different coordinate system, the rest of the code is to account for this 
+					% Newton to Pound Conversion
+TR_unadj 	= x(1) * norm_TR	* 4.44822; 
+LCAF_unadj 	= x(2) * norm_LCAF	* 4.44822;
+LCAR_unadj 	= x(3) * norm_LCAR	* 4.44822;
+UCAF_unadj 	= x(4) * norm_UCAF	* 4.44822;
+UCAR_unadj 	= x(5) * norm_UCAR	* 4.44822;
+PR_unadj 	= x(6) * norm_PR	* 4.44822;
+
+TR_result 	= [-TR_unadj(1), TR_unadj(3), -TR_unadj(2)];
+LCAF_result 	= [-LCAF_unadj(1), LCAF_unadj(3), -LCAF_unadj(2)];
+LCAR_result 	= [-LCAR_unadj(1), LCAR_unadj(3), -LCAR_unadj(2)];
+UCAF_result 	= [-UCAF_unadj(1), UCAF_unadj(3), -UCAF_unadj(2)];
+UCAR_result 	= [-UCAR_unadj(1), UCAR_unadj(3), -UCAR_unadj(2)];
+PR_result 	= [-PR_unadj(1), PR_unadj(3), -PR_unadj(2)];
+
+
+TR_result;
+LCA_result = LCAF_result + LCAR_result;
+UCA_result = UCAF_result + UCAR_result;
+PR_result;
+
+			fprintf(' Tie/Toe Rod: \t \t \t %6.3f i \t %6.3f j \t %6.3f k \n Lower Control Arm: \t \t %6.3f i \t %6.3f j \t %6.3f k \n Upper Control Arm: \t \t %6.3f i \t %6.3f j \t %6.3f k \n Push Rod: \t \t \t %6.3f i \t %6.3f j \t %6.3f k \n', TR_result, LCA_result, UCA_result, PR_result);
+
+
+%%% End ANSYS Converstions
+
 
 end
